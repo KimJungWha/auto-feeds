@@ -1,0 +1,62 @@
+name: Update oneko
+
+# 触发条件定义
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  release:
+    types: published
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: 0 */12 * * *
+  watch:
+    types: started
+
+# 环境变量定义
+env:
+  TZ: Asia/Shanghai
+  REPO_NAME: oneko
+  USER_NAME: KimJungWha
+  USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+
+jobs:
+  update-oneko:
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      # 检出脚本  
+    - name: Checkout
+      uses: actions/checkout@main
+      
+      # 搭建环境
+    - name: Installation depends
+      env: 
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt update
+        sudo -E apt install -qqy git subversion 
+        sudo timedatectl set-timezone "${TZ}"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "Bot"
+      
+      # 拉取软件包
+    - name: Clone packages
+      run: |
+        cd $GITHUB_WORKSPACE
+        chmod +x main.sh
+        git clone https://github.com/${USER_NAME}/${REPO_NAME}.git 
+        cd ${REPO_NAME}
+        rm -Rf *
+        git rm --cache *
+        $GITHUB_WORKSPACE/main.sh
+        
+      # 推送仓库
+    - name: Push changes
+      run:  |
+        [ -e $GITHUB_WORKSPACE/README.md ] && cp $GITHUB_WORKSPACE/README.md $GITHUB_WORKSPACE/${REPO_NAME}
+        cd ${REPO_NAME}
+        git add .
+        git commit -m "update$(TZ='Asia/Shanghai' date +-%m.%d)"
+        git push --quiet "https://${USER_NAME}:${{ secrets.USER_PASSWORD }}@github.com/${USER_NAME}/${REPO_NAME}.git"
