@@ -30,7 +30,6 @@ git clone https://github.com/KimJungWha/default-settings
 # === NAS(文件共享/文件下载) ===
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nfs
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-samba4
-svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-baidupcs-web
 
 
 # === 网络相关 ===
