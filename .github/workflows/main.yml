@@ -47,6 +47,7 @@ jobs:
         cd $GITHUB_WORKSPACE
         chmod +x main.sh
         git clone https://github.com/${USER_NAME}/${REPO_NAME}.git 
+        mv ${REPO_NAME}/README.md ${GITHUB_WORKSPACE}/README.md.bak
         cd ${REPO_NAME}
         rm -Rf *
         git rm --cache *
@@ -55,7 +56,7 @@ jobs:
       # 推送仓库
     - name: Push changes
       run:  |
-        [ -e $GITHUB_WORKSPACE/README.md ] && cp $GITHUB_WORKSPACE/README.md $GITHUB_WORKSPACE/${REPO_NAME}
+        [ -e $GITHUB_WORKSPACE/README.md.bak ] && cp $GITHUB_WORKSPACE/README.md.bak $GITHUB_WORKSPACE/${REPO_NAME}/README.md
         cd ${REPO_NAME}
         git add .
         git commit -m "update$(TZ='Asia/Shanghai' date +-%m.%d)"
