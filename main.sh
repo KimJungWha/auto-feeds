@@ -36,9 +36,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-samba4
 svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-nft-qos
 svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-syncdial
 svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-mwan3
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-sfe
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier
-svn co https://github.com/MeIsReallyBa/Openwrt-sfe-flowoffload-linux-5.4/trunk/shortcut-fe
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-flowoffload
 
 # === 清理部分 ===
 rm -rf ./*/.git
