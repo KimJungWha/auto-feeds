@@ -60,4 +60,9 @@ jobs:
         cd ${REPO_NAME}
         git add .
         git commit -m "update$(TZ='Asia/Shanghai' date +-%m.%d)"
-        git push --quiet "https://${USER_NAME}:${{ secrets.USER_PASSWORD }}@github.com/${USER_NAME}/${REPO_NAME}.git"
+        git push --quiet "https://${USER_NAME}:${{ secrets.USER_PASSWORD }}@github.com/${USER_NAME}/${REPO_NAME}.git";return=$?
+        if [ $return == 1 ];then
+          exit 0
+        else 
+          echo "报错，返回值是 $return"
+        fi
